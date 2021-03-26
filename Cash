@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <math.h>
+
+//establish if a number is negative, to prompt the user for another input
+float askPositiveFloat(void)
+{
+    float positiveFloat;
+    bool negative = true;
+    while (negative)
+    {
+    positiveFloat = get_float("Change due: ");
+
+        if (positiveFloat > 0)
+        {
+            negative = false;
+        }
+    }
+    return positiveFloat;
+}
+
+//declare int values for coinNumber initialize totalCents & round to the next highest amt
+//also initialize the remainder and the temporary number needed to move on with calculating the next coin due
+int coinNumber()
+{
+    int totalCents = round(askPositiveFloat() * 100);
+    int numberOfCoins = 0;
+    int remainder;
+    int tempNumber;
+
+//declare int values for the currency type
+    int quarter = 25;
+    int dime = 10;
+    int nickel = 5;
+    int penny = 1;
+
+//our forumla to calculate the remainder due after using each currency type
+    if (totalCents >= quarter)
+    {
+        remainder = totalCents % quarter;
+        tempNumber = totalCents - remainder;
+        numberOfCoins = numberOfCoins + (tempNumber / quarter);
+        totalCents = remainder;
+    }
+    
+    if (totalCents >= dime)
+    {
+        remainder = totalCents % dime;
+        tempNumber = totalCents - remainder;
+        numberOfCoins = numberOfCoins + (tempNumber / dime);
+        totalCents = remainder;
+    }
+    
+    if (totalCents >= nickel)
+    {
+        remainder = totalCents % nickel;
+        tempNumber = totalCents - remainder;
+        numberOfCoins = numberOfCoins + (tempNumber / nickel);
+        totalCents = remainder;
+    }
+    
+    if (totalCents >= penny)
+    {
+        remainder = totalCents % penny;
+        tempNumber = totalCents - remainder;
+        numberOfCoins = numberOfCoins + (tempNumber / penny);
+        totalCents = remainder;
+    }
+    return numberOfCoins; 
+}
+
+//main function will print the number of coins returned to the user. 
+int main()
+{
+    printf("%d\n", coinNumber());
+}
